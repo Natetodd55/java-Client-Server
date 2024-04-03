@@ -1,3 +1,4 @@
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -42,7 +43,7 @@ public class Server {
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                 String line;
-                while ((line = in.readLine()) != null) {
+                while ((line = BoundedLineReader.readLine(in, 5_000_000)) != null) {
                     try {
                         String[] parts = line.split(" ");
                         String action = parts[0];

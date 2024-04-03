@@ -1,3 +1,4 @@
+import io.github.pixee.security.BoundedLineReader;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -26,7 +27,7 @@ public class ClientModel {
         String s = String.format("login %s %s", username, password);
         out.println(s);
         try {
-            result = in.readLine();
+            result = BoundedLineReader.readLine(in, 5_000_000);
         } catch (IOException e) {
             System.err.println("Error reading from server");
             System.exit(1);
@@ -43,7 +44,7 @@ public class ClientModel {
         String s = String.format("create %s %s", username, password);
         out.println(s);
         try {
-            result = in.readLine();
+            result = BoundedLineReader.readLine(in, 5_000_000);
         } catch (IOException e) {
             System.err.println("Error reading from server");
             System.exit(1);
@@ -63,7 +64,7 @@ public class ClientModel {
         ArrayList<String> data = new ArrayList<String>();
         out.println("getScorers");
         try {
-            String dataToRead = in.readLine();
+            String dataToRead = BoundedLineReader.readLine(in, 5_000_000);
             String[] parts = dataToRead.split(" - ");
             String s1 = String.format("%s %s", parts[0], parts[1]);
             data.add(s1);
@@ -88,7 +89,7 @@ public class ClientModel {
         String s = String.format("bet %s %s", betAmmount, choice);
         out.println(s);
         try {
-            String outcome = in.readLine();
+            String outcome = BoundedLineReader.readLine(in, 5_000_000);
             String[] parts = outcome.split(" ");
             if(parts[0].equals("WINNER")){
                 earnings = Integer.parseInt(parts[1]);
