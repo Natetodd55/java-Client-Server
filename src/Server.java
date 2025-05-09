@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Random;
 public class Server {
@@ -64,7 +65,7 @@ public class Server {
                                 if (betAmmount > serverModel.getUserBalance()){
                                     out.println("noFunds");
                                 }else {
-                                    Random random = new Random();
+                                    Random random = new SecureRandom();
                                     int result = random.nextInt(2);
                                     String output = (result == 0) ? "heads" : "tails";
                                     if (output.equals(parts[2])) {
